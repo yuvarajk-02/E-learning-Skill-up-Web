@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkillUp</title>
+  <link rel="icon" href="logo.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      overflow-x: hidden; /* prevent horizontal scroll */
+    }
+
+    /* NAVIGATION */
+    nav {
+      background: linear-gradient(90deg, #e63946, #f3722c, #f9844a, #f9c74f);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      color: #0e055b;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-shadow: 0 0 8px rgba(255 255 255 / 0.7);
+      flex-shrink: 0;
+    }
+
+    /* Menu Links + Search container */
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-grow: 1;
+      justify-content: center;
+    }
+
+    ul.nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin-right: 20px;
+    }
+    ul.nav-links li a {
+      color: white;
+      font-weight: 600;
+      font-size: 18px;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    ul.nav-links li a:hover,
+    ul.nav-links li a:focus {
+      background-color: rgba(255 255 255 / 0.3);
+      outline: none;
+    }
+
+    /* Search box in center */
+    .search-box {
+      position: relative;
+      width: 180px;
+    }
+    .search-box input[type="search"] {
+      width: 100%;
+      padding: 6px 30px 6px 10px;
+      border-radius: 20px;
+      border: none;
+      font-size: 14px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+    .search-box input[type="search"]:focus {
+      box-shadow: 0 0 8px rgba(255,255,255,0.8);
+    }
+    .search-box button {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #e63946;
+      font-size: 16px;
+    }
+
+    /* Sign-in button */
+    .sign-in-btn {
+      background: #fff;
+      color: #e63946;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(255 255 255 / 0.8);
+    }
+    .sign-in-btn:hover,
+    .sign-in-btn:focus {
+      background: #e63946;
+      color: white;
+      outline: none;
+      box-shadow: 0 0 15px #ff7777;
+    }
+
+    /* rest of your styles unchanged */
+
+    header {
+      background: #ffebcd url('https://source.unsplash.com/1600x400/?learning,technology') center/cover no-repeat;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5rem;
+    }
+    header p {
+      margin: 1rem auto;
+      max-width: 600px;
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      background: #e63946;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+
+   .full-carousel {
+  width: 100vw;
+  height: 70vh; /* Full screen height */
+  overflow: hidden;
+  position: relative;
+  width: auto;
+}
+
+.full-carousel-track {
+  display: flex;
+  width: calc(100vw * 5); /* 5 images */
+  animation: fullSlide 25s infinite;
+}
+
+.full-carousel-track img {
+  width: 100vw;
+  height: 70vh;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Slide animation */
+@keyframes fullSlide {
+  0%, 20%   { transform: translateX(0); }
+  25%, 45%  { transform: translateX(-100vw); }
+  50%, 70%  { transform: translateX(-200vw); }
+  75%, 95%  { transform: translateX(-300vw); }
+  100%      { transform: translateX(-400vw); }
+}
+
+
+    /* CARD CONTAINER with arrows */
+    .cards-wrapper {
+      position: relative;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 40px; /* space for arrows */
+    }
+    .card-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 20px;
+      padding-bottom: 15px;
+      scrollbar-width: none; /* Firefox */
+    }
+    .card-container::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+    .card {
+      flex: 0 0 auto;
+      width: 260px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(76, 38, 38, 0.1);
+      transition: transform 0.3s, background-color 0.3s;
+      padding-bottom: 15px;
+      cursor: grab;
+    }
+    .card:active {
+      cursor: grabbing;
+    }
+    .card:hover {
+      background-color: #b9d2b2;
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .card-content {
+      padding: 10px 15px;
+    }
+    .course-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 10px 0 5px;
+    }
+    .stars {
+      color: #ffbf00;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    .price {
+      color: #e63946;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    /* Arrow buttons */
+    .arrow-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(230, 57, 70, 0.8);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      width: 40px;
+      height: 60px;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.3s;
+      user-select: none;
+    }
+    .arrow-btn:hover {
+      background: rgba(230, 57, 70, 1);
+    }
+    .arrow-left {
+      left: 0;
+    }
+    .arrow-right {
+      right: 0;
+    }
+    .card-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    background-color: #e63946;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .card-btn:hover {
+    background-color: #c21f30;
+    transform: translateY(-2px);
+  }
+
+    .site-footer {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 20px;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      font-size: 20px;
+      font-style: italic;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .footer-column h3 {
+      margin-bottom: 12px;
+  
+    }
+    .footer-column a {
+      color: #ccc;
+      text-decoration: none;
+    }
+    .footer-column a:hover {
+      color: white;
+    }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+    .footer-bottom-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .left-text {
+      color: #e7e7ec;
+      padding: 20px;
+      font-size: 16px;
+      margin-left: 22px;
+    }
+
+    .right-icons a {
+      margin-right: 10px;
+      color: #ccc;
+      text-decoration: none;
+      font-size: 1.2rem;
+      padding: 5px;
+    }
+
+    .right-icons a:hover {
+      color: rgb(248, 244, 245);
+    }
+
+    /* Sign-in button */
+.sign-in-btn {
+  background: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.sign-in-btn:hover {
+  background: #0056b3;
+}
+
+/* Modal full width */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal wrapper for spacing */
+.modal-wrapper {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Individual login box */
+.login-box {
+  flex: 1;
+  max-width: 400px;
+  padding: 20px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Inputs and buttons */
+.login-box input[type="text"],
+.login-box input[type="email"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.login-box input[type="submit"] {
+  background: #007BFF;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Social login buttons */
+.google-btn, .facebook-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.google-btn {
+  background: #db4437;
+}
+
+.facebook-btn {
+  background: #3b5998;
+}
+
+
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-container">
+    <a href="logo.png" class="logo">🎓SkillUp</a>
+
+    <div class="nav-center">
+
+      <div class="search-box">
+        <input type="search" placeholder="Search courses..." aria-label="Search courses" />
+        <button aria-label="Search">&#128269;</button>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Courses</a></li>
+        <li><a href="#My Dashboard ">My Dashboard </a></li>
+      </ul>
+    </div>
+
+    <button class="sign-in-btn" onclick="openSignInModal()">Sign In</button>
+  </div>
+</nav>
+<!-- USER LOGIN MODAL -->
+<div id="signInModal" class="modal">
+  <div class="modal-wrapper">
+    <!-- Admin Login -->
+    <div class="login-box admin-login">
+      <h2>Admin Login</h2>
+      <form>
+        <input type="text" placeholder="Admin Username" required />
+        <input type="password" placeholder="Password" required />
+        <input type="submit" value="Login" />
+      </form>
+    </div>
+
+    <!-- User Login -->
+      <div class="login-box user-login">
+        <span class="close" onclick="closeSignInModal()">&times;</span>
+        <h2>User Login</h2>
+        <form>
+          <input type="email" placeholder="User Email" name="username" required />
+          <input type="password" placeholder="Password" required />
+          <input type="submit" value="Login" />
+          <hr />
+          <br>
+          <p>Don't have an account? <a href="#" onclick="openSignUpModal(); closeSignInModal();">Register here</a></p>
+
+          <button class="google-btn" onclick="handleGoogleLogin()">
+            <i class="fa-brands fa-google"></i> Sign in with Google
+          </button>
+          <button class="facebook-btn" onclick="handleFacebookLogin()">
+            <i class="fa-brands fa-facebook-f"></i> Sign in with Facebook
+          </button>
+          
+        </form>
+    </div>
+  </div>
+</div>
+<!-- USER REGISTER MODAL -->
+<div id="signUpModal" class="modal">
+  <div class="modal-wrapper">
+    <div class="login-box user-register">
+      <span class="close" onclick="closeSignUpModal()">&times;</span>
+      <h2>User Register</h2>
+      <form>
+        <input type="text" placeholder="Full Name" name="name" required />
+        <input type="email" placeholder="Email" name="email" required />
+        <input type="password" placeholder="Password" name="password" required />
+        <input type="password" placeholder="Confirm Password" required />
+        <input type="submit" value="Register" />
+        <hr />
+        <button class="google-btn" onclick="handleGoogleLogin()">
+          <i class="fa-brands fa-google"></i> Sign up with Google
+        </button>
+        <button class="facebook-btn" onclick="handleFacebookLogin()">
+          <i class="fa-brands fa-facebook-f"></i> Sign up with Facebook
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- FULL-WIDTH AUTO-ROTATING IMAGE CAROUSEL -->
+<div class="full-carousel">
+  <div class="full-carousel-track">
+    <img src="poster1.jpg" alt="Slide 1">
+    <img src="poster2.jpg" alt="Slide 2">
+    <img src="poster3.jpg" alt="Slide 3">
+    <img src="poster4.jpg" alt="Slide 4">
+    <img src="poster5.jpg" alt="Slide 5">
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="home">
+  <h1>Master New Skills Online</h1>
+  <p>Join SkillUp to access hundreds of courses designed to boost your career and enrich your knowledge.</p>
+  <a href="#menu" class="btn">Explore Courses</a>
+</header>
+<!-- COURSE CARDS with arrows and tagline -->
+<section style="text-align:center; padding: 40px 20px;" id="menu">
+  <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 20px;">
+    🎓 Learn from 350+ top universities and companies
+  </h2>
+
+  <div class="cards-wrapper">
+    <!-- Left Arrow -->
+    <button class="arrow-btn arrow-left" onclick="scrollCards('left')">&#8592;</button>
+
+    <!-- Card Container -->
+    <div class="card-container" id="cardContainer">
+      <!-- Card 1 -->
+      <div class="card">
+        <img src="card1.jpeg" alt="Web Development" />
+        <div class="card-content">
+          <div class="course-name">Web Development</div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="price">₹999</div>
+          <a href="https://youtu.be/Q33KBiDriJY" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="card">
+        <img src="card2.jpeg" alt="Python Programming" />
+        <div class="card-content">
+          <div class="course-name">Python Programming</div>
+          <div class="stars">⭐⭐⭐⭐☆</div>
+          <div class="price">₹799</div>
+          <a href="https://youtu.be/_uQrJ0TkZlc" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="card">
+        <img src="card3.jpeg" alt="Graphic Design" />
+        <div class="card-content">
+          <div class="course-name">Graphic Design</div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="price">₹899</div>
+          <a href="https://youtu.be/8kdYF9p1Tik" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="card">
+        <img src="card4.jpeg" alt="AI & ML Basics" />
+        <div class="card-content">
+          <div class="course-name">AI & ML Basics</div>
+          <div class="stars">⭐⭐⭐⭐☆</div>
+          <div class="price">₹1199</div>
+          <a href="https://youtu.be/ukzFI9rgwfU" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="card">
+        <img src="card5.jpeg" alt="Digital Marketing" />
+        <div class="card-content">
+          <div class="course-name">Digital Marketing</div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="price">₹699</div>
+          <a href="https://youtu.be/nkZz9DOBzBI" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="card">
+        <img src="card6.jpeg" alt="Data Science" />
+        <div class="card-content">
+          <div class="course-name">Data Science</div>
+          <div class="stars">⭐⭐⭐⭐☆</div>
+          <div class="price">₹1399</div>
+          <a href="https://youtu.be/X3paOmcrTjQ" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+      <!-- Card 7 -->
+      <div class="card">
+        <img src="card7.jpeg" alt="Cybersecurity" />
+        <div class="card-content">
+          <div class="course-name">Cybersecurity</div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="price">₹1299</div>
+          <a href="https://youtu.be/inWWhr5tnEA" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+      <!-- Card 8 -->
+      <div class="card">
+        <img src="card8.jpeg" alt="Cloud Computing" />
+        <div class="card-content">
+          <div class="course-name">Cloud Computing</div>
+          <div class="stars">⭐⭐⭐⭐☆</div>
+          <div class="price">₹1499</div>
+          <a href="https://youtu.be/M988_fsOSWo" target="_blank" class="card-btn">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Arrow -->
+    <button class="arrow-btn arrow-right" onclick="scrollCards('right')">&#8594;</button>
+  </div>
+</section>
+
+
+<section>
+<!-- NEW TRENDING COURSES SECTION -->
+<h2 style="text-align: center; font-size: 1.6rem; color: #222; margin: 40px 0 20px;">
+  🚀 New & Trending Courses
+</h2>
+<div class="cards-wrapper">
+  <button class="arrow-btn arrow-left" onclick="scrollTrending('left')">&#8592;</button>
+  <div class="card-container" id="trendingCardContainer">
+
+    <!-- Blockchain Basics -->
+    <div class="card">
+      <img src="card9.webp" alt="Blockchain Basics" />
+      <div class="card-content">
+        <div class="course-name">Blockchain Basics</div>
+        <div class="stars">⭐⭐⭐⭐</div>
+        <div class="price">₹1099</div>
+        <a href="https://youtu.be/SSo_EIwHSd4" target="_blank" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Mobile App Development -->
+    <div class="card">
+      <img src="card10.jpeg" alt="Mobile App Development" />
+      <div class="card-content">
+        <div class="course-name">Mobile App Development</div>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="price">₹1299</div>
+        <a href="https://youtu.be/fis26HvvDII" target="_blank" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Java Programming -->
+    <div class="card">
+      <img src="card11.jpeg" alt="Java Programming" />
+      <div class="card-content">
+        <div class="course-name">Java Programming</div>
+        <div class="stars">⭐⭐⭐⭐</div>
+        <div class="price">₹899</div>
+        <a href="https://youtu.be/grEKMHGYyns" target="_blank" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+    <!-- UI/UX Fundamentals -->
+    <div class="card">
+      <img src="card12.jpeg" alt="UI/UX Fundamentals" />
+      <div class="card-content">
+        <div class="course-name">UI/UX Fundamentals</div>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="price">₹1099</div>
+        <a href="https://youtu.be/3cbiZV4H24c" target="_blank" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Excel for Professionals -->
+    <div class="card">
+      <img src="card13.jpeg" alt="Excel for Professionals" />
+      <div class="card-content">
+        <div class="course-name">Excel for Professionals</div>
+        <div class="stars">⭐⭐⭐⭐</div>
+        <div class="price">₹499</div>
+        <a href="https://youtu.be/nGhE5iBD4vc" target="_blank" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Ethical Hacking -->
+    <div class="card">
+      <img src="card14.jpeg" alt="Ethical Hacking" />
+      <div class="card-content">
+        <div class="course-name">Ethical Hacking</div>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="price">₹1499</div>
+        <a href="https://youtu.be/3Kq1MIfTWCE" target="_blank" class="card-btn">Learn More</a>
+      </div>
+    </div>
+
+  </div>
+  <button class="arrow-btn arrow-right" onclick="scrollTrending('right')">&#8594;</button>
+</div>
+
+</section>
+
+
+<!-- E-LEARNING SECTION 1: Left Image, Right Text -->
+<section style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; padding: 60px 20px; background: #fafafa;">
+  <div style="flex: 1; min-width: 300px; max-width: 500px; padding: 20px;">
+   <img src="ai logo.jpg"
+     alt="Interactive E-learning"
+     style="width: 100%; max-width: 500px; border: #080720; border-style: solid; border-width: 3px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);" />
+
+  </div>
+  <div style="flex: 1; min-width: 300px; max-width: 600px; padding: 20px;">
+   <h2 style="font-size: 2rem; color: #222;">Artificial Intelligence</h2>
+<p style="font-size: 1.1rem; margin-top: 15px; color: #555;">
+  Unlock the power of AI with hands-on training designed for beginners and enthusiasts. Our AI course blends theory with real-world applications, preparing you to build smart solutions using cutting-edge tools and techniques.
+</p>
+<ul style="margin-top: 15px; font-size: 1rem; color: #444;">
+  <li>🤖 Build your first AI model from scratch</li>
+  <li>📊 Learn with visual demos and real datasets</li>
+  <li>💻 Hands-on projects in Python & machine learning</li>
+</ul>
+  </div>
+</section>
+
+
+
+<!-- E-LEARNING SECTION 2: Left Text, Centered Image -->
+<section style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; padding: 60px 20px; background: #f0f4f8;">
+  <div style="flex: 1; min-width: 300px; max-width: 600px; padding: 20px;">
+   <h2 style="font-size: 2rem; color: #222;">Graphic Design</h2>
+<p style="font-size: 1.1rem; margin-top: 15px; color: #555;">
+  Dive into the world of visual creativity with our Graphic Design course. Learn the fundamentals of layout, color theory, typography, and digital tools to create compelling designs that communicate effectively.
+</p>
+<ul style="margin-top: 15px; font-size: 1rem; color: #444;">
+  <li>🎨 Master Adobe Photoshop, Illustrator & Canva</li>
+  <li>🧠 Learn principles of design thinking</li>
+  <li>📁 Build a portfolio with real-world design tasks</li>
+</ul>
+  </div>
+  <div style="flex: 1; display: flex; justify-content: center; align-items: center; min-width: 300px; max-width: 600px; padding: 20px;">
+    <img src="graphics logo.png" alt="Learning on the go" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);" />
+  </div>
+</section>
+
+<!-- PROFILE SHOWCASE SECTION -->
+<section style="padding: 60px 20px; background: #f9f9f9; text-align: center;">
+  <h2 style="font-size: 2rem; color: #222; margin-bottom: 40px;">🏆 Top Achievers of SkillUp</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;">
+    
+    <!-- Profile 1 -->
+    <div style="width: 260px; background: white; border-radius: 20px; box-shadow: 0 8px 18px rgba(0,0,0,0.1); padding: 30px; transition: transform 0.3s;">
+      <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Aarav" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;">
+      <h3 style="margin: 10px 0; font-size: 1.2rem; color: #333;">Aarav Mehta</h3>
+      <p style="color: #666;">Web Developer</p>
+      <p style="margin-top: 8px;"><strong>Hired at:</strong> Infosys</p>
+    </div>
+
+    <!-- Profile 2 -->
+    <div style="width: 260px; background: white; border-radius: 20px; box-shadow: 0 8px 18px rgba(0,0,0,0.1); padding: 30px; transition: transform 0.3s;">
+      <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sneha" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;">
+      <h3 style="margin: 10px 0; font-size: 1.2rem; color: #333;">Sneha Reddy</h3>
+      <p style="color: #666;">UI/UX Designer</p>
+      <p style="margin-top: 8px;"><strong>Hired at:</strong> Google</p>
+    </div>
+
+    <!-- Profile 3 -->
+    <div style="width: 260px; background: white; border-radius: 20px; box-shadow: 0 8px 18px rgba(0,0,0,0.1); padding: 30px; transition: transform 0.3s;">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;">
+      <h3 style="margin: 10px 0; font-size: 1.2rem; color: #333;">Rahul Sharma</h3>
+      <p style="color: #666;">Data Scientist</p>
+      <p style="margin-top: 8px;"><strong>Hired at:</strong> TCS</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="site-footer" id="contact">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>SkillUp</h3>
+      <p>Empowering you to grow through online learning.</p>
+    </div>
+    <div class="footer-column">
+      <h3>Links</h3>
+      <a href="#home">Home</a><br />
+      <a href="#about">About</a><br />
+      <a href="#menu">Courses</a><br />
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-column">
+      <h3>Contact</h3>
+      <p>📍 Chennai, India</p>
+      <p>📧 support@skillup.com</p>
+      <p>📞 +91‑12345‑67890</p>
+    </div>
+  </div>
+
+  <!-- Updated Footer Bottom -->
+  <div class="footer-bottom-flex">
+    <div class="left-text">&copy; 2025 SkillUp • All rights reserved.</div>
+    <div class="right-icons">
+      <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+
+<script>
+function openSignInModal() {
+    document.getElementById("signInModal").style.display = "flex";
+  }
+
+  function closeSignInModal() {
+    document.getElementById("signInModal").style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById("signInModal");
+    if (event.target === modal) {
+      closeSignInModal();
+    }
+  }
+
+  function handleGoogleLogin() {
+    alert("Google Login clicked.");
+  }
+
+  function handleFacebookLogin() {
+    alert("Facebook Login clicked.");
+  } 
+  function openSignUpModal() {
+    document.getElementById("signUpModal").style.display = "block";
+  }
+
+  function closeSignUpModal() {
+    document.getElementById("signUpModal").style.display = "none";
+  }
+
+  function closeSignInModal() {
+    document.getElementById("signInModal").style.display = "none";
+  }
+  // Scroll cards on arrow click
+  const cardContainer = document.getElementById("cardContainer");
+  const leftBtn = document.querySelector(".arrow-left");
+  const rightBtn = document.querySelector(".arrow-right");
+
+  // Scroll amount = card width + gap (gap is 20px)
+  // We'll compute dynamically:
+  function getScrollAmount() {
+    const card = cardContainer.querySelector(".card");
+    if (!card) return 300; // fallback
+    const style = window.getComputedStyle(card);
+    const width = card.offsetWidth;
+    const marginRight = parseInt(style.marginRight) || 0;
+    return width + 20; // gap is 20px
+  }
+
+  leftBtn.addEventListener("click", () => {
+    cardContainer.scrollBy({
+      left: -getScrollAmount(),
+      behavior: "smooth",
+    });
+  });
+
+  rightBtn.addEventListener("click", () => {
+    cardContainer.scrollBy({
+      left: getScrollAmount(),
+      behavior: "smooth",
+    });
+  });
+
+  //second card
+  function scrollTrending(direction) {
+  const container = document.getElementById("trendingCardContainer");
+  const card = container.querySelector(".card");
+  const scrollAmount = card.offsetWidth + 20;
+
+  container.scrollBy({
+    left: direction === "left" ? -scrollAmount : scrollAmount,
+    behavior: "smooth"
+  });
+}
+
+
+</script>
+
+</body>
+</html>
