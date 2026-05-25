@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "manage.py",
@@ -8,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "manage.py"
+      "dest": "skillup_project/wsgi.py"
     }
   ]
 }
